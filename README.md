@@ -45,9 +45,10 @@ conda install pytorch=1.7.1 cudatoolkit=9.2 -c pytorch
 
 ### Dataset(bfly)
 You can download bfly-soft article dataset [here](https://drive.google.com/file/d/1kZ3_xIzbXNalci7RuS2YeR5ksRW23uNr/view?usp=sharing) for training/evaluation; unzip and put the files(train.jsonl, dev.jsonl, test.jsonl) under directory `dataset/bfly`
-### Simple Inference
+
+s### Simple Inference
 With trained [model](https://drive.google.com/file/d/1ZIfZM_LsPn0MWh12nOkyx6alTY1viw5I/view?usp=sharing) at `models/best_model.pth` and demo text file at `./simple_inference/demo.story`, implement simple inference using the command below;
 ```bash
 python simple_inference.py --test_from models/best_model.pth
 ```
-This command will produce inference_result.txt file under the directory `./simple_inference`. It produces logit score for topic segmentation for each space between every two sentences.
+This command will produce `inference_result.txt` file under the directory `./simple_inference`. It produces logit scores for topic segmentation between every two sentences.
