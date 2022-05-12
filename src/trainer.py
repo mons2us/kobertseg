@@ -76,7 +76,6 @@ class Trainer(object):
                 used to save a checkpoint.
                 Thus nothing will be saved if this parameter is None
     """
-
     def __init__(self, args, model, optim, grad_accum_count=1, n_gpu=1, gpu_rank=1, report_manager=None):
         # Basic attributes.
         self.args = args
@@ -100,7 +99,6 @@ class Trainer(object):
         The main training loops.
         by iterating over training data (i.e. `train_iter_fct`)
         and running validation (i.e. iterating over `valid_iter_fct`
-
         Args:
             train_iter_fct(function): a function that returns the train
                 iterator. e.g. something like
@@ -109,7 +107,6 @@ class Trainer(object):
             train_steps(int):
             valid_steps(int):
             save_checkpoint_steps(int):
-
         Return:
             None
         """
@@ -233,10 +230,7 @@ class Trainer(object):
             n_correct = (sep_label == (sep_pred > 0)).sum().to('cpu').item()
 
             loss.backward()
-
-            # TODO 이걸 해야되나?
-            # loss.div(float(normalization)).backward()
-
+            
             # Training process report (statistics)
             # normalization: Value kept added, every time a new batch comes in
             batch_stats = Statistics(float(loss.detach().to('cpu').numpy()), normalization, n_correct)

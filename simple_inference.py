@@ -180,7 +180,7 @@ if __name__=='__main__':
     parser.add_argument("--log_dir", default='logs/traineval')
 
     # Eval
-    parser.add_argument("--test_from", default='models/model_w3_fixed_step_50000.pt')
+    parser.add_argument("--test_from", default='models/best_model.pt')
     parser.add_argument("--threshold", default=0.0, type=float)
 
     args = parser.parse_args()
@@ -191,7 +191,7 @@ if __name__=='__main__':
 
     checkpoint = torch.load(args.test_from, map_location=lambda storage, loc: storage)
     args = get_model_params(args, checkpoint) # get arguments from saved opts
-    
+
     model = BertSeparator(args, device_id, checkpoint).to(device)
 
     inferencer = SepInference(args, model, device)

@@ -47,7 +47,6 @@ if __name__ == '__main__':
     # Model builder
     # parser.add_argument('--mode', default='train', type=str, choices=['train', 'validate', 'test'])
 
-    #parser.add_argument('--bert_data_path', default='../bert_data_new/cnndm')
     parser.add_argument('--model_index', default='A01', type=str)
     parser.add_argument('--dataset_path', default='dataset/')
     parser.add_argument('--model_path', default='models/')
@@ -156,6 +155,5 @@ if __name__ == '__main__':
     # train
     if args.mode == 'train':
         train_sep(args, device_id)
-    # !!TODO!! multi-gpu 이용한 inference
     elif args.mode == 'test':
         test(args, device_id)

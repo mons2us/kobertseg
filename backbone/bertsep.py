@@ -48,14 +48,9 @@ class LinearClassifier(nn.Module):
     def __init__(self, window_size):
         super(LinearClassifier, self).__init__()
         flat_size = 768 * window_size * 2
-        # self.linear_layer = nn.Sequential(
-        #     nn.Linear(flat_size, 32),
-        #     nn.LayerNorm([32]),
-        #     nn.ReLU(),
-        #     nn.Linear(32, 1)
-        # )
         self.linear_layer = nn.Sequential(
             nn.Linear(flat_size, 1),
+            nn.Sigmoid(),
         )
 
     def forward(self, x):
@@ -133,10 +128,6 @@ class SepTransformerEncoder(nn.Module):
 
         for i in range(self.num_inter_layers):
             x = self.transformer_inter[i](i, x, x, ~mask)  # all_sents * max_tokens * dim
-
-        # !!TODO!!
-        # Layer Norm or not?
+            
         out = self.layer_norm(x)
-        # sent_scores = self.sigmoid(self.wo(x))
-        # sent_scores = sent_scores.squeeze(-1) * mask.float()
         return out
