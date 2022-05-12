@@ -2,6 +2,7 @@
 
 This is an official code for **\<KoBERTSEG: Local Context Based Topic Segmentation Using KoBERT, JKIIE, 2022>.**<br>
 <i>Codes for building backbone BERT architecture refers to [Presumm](https://github.com/nlpyang/PreSumm).</i>
+
 ## KoBERTSEG
 
 ### Highlights
@@ -30,6 +31,9 @@ Our main contributions are as follows:
 | `KoBERTSEG`</br>(window=3)| 95.69 | 98.50 | 96.79 | 0.0193 | 0.0233 |
 | `KoBERTSEG-SUM`</br>(window=3)| <u>**97.38**</u> | 98.78 | <u>**97.86**</u> | <u>**0.0136**</u> | <u>**0.0157**</u> |
 <br>
+
+## Usage
+
 ### Requirements
 Linux, Python>=3.8, PyTorch>=1.7.1
 
@@ -38,13 +42,9 @@ We recommend you to use Anaconda to create a conda environment:
 conda create -n kobertseg python=3.7 pip
 conda install pytorch=1.7.1 cudatoolkit=9.2 -c pytorch
 ```
-<br>
 
 ### Dataset(bfly)
 You can download bfly-soft article dataset [here](https://drive.google.com/file/d/1kZ3_xIzbXNalci7RuS2YeR5ksRW23uNr/view?usp=sharing) for training/evaluation; unzip and put the files(train.jsonl, dev.jsonl, test.jsonl) under directory `dataset/bfly`
-
-<br>
-
 ### Simple Inference
 With trained [model](https://drive.google.com/file/d/1ZIfZM_LsPn0MWh12nOkyx6alTY1viw5I/view?usp=sharing) at `models/best_model.pth` and demo text file at `./simple_inference/demo.story`, implement simple inference using the command below;
 ```bash
