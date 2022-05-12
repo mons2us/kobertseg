@@ -7,7 +7,7 @@ This is an official code for **\<KoBERTSEG: Local Context Based Topic Segmentati
 ### Highlights
 KoBERTSEG is a KoBERT based model for topic segmentation, which has its main objective in splitting a document into sub-documents each having only one single topic.
 <p align="center">
-<img src="figures/kobertseg_structure.png " width="600"> 
+<img src="misc/kobertseg_structure.png " width="600"> 
 </p>
 
 Our main contributions are as follows:
@@ -38,10 +38,16 @@ We recommend you to use Anaconda to create a conda environment:
 conda create -n kobertseg python=3.7 pip
 conda install pytorch=1.7.1 cudatoolkit=9.2 -c pytorch
 ```
+<br>
+
+### Dataset(bfly)
+You can download bfly-soft article dataset [here](https://drive.google.com/file/d/1kZ3_xIzbXNalci7RuS2YeR5ksRW23uNr/view?usp=sharing) for training/evaluation; unzip and put the files(train.jsonl, dev.jsonl, test.jsonl) under directory `dataset/bfly`
+
+<br>
 
 ### Simple Inference
-With trained model at `your/dir/to/model.pth` and demo text file at `./simple_inference/demo.story`, implement simple inference using the command below;
+With trained [model](https://drive.google.com/file/d/1ZIfZM_LsPn0MWh12nOkyx6alTY1viw5I/view?usp=sharing) at `models/best_model.pth` and demo text file at `./simple_inference/demo.story`, implement simple inference using the command below;
 ```bash
-python simple_inference.py --test_from your_dir_to_model.pth
+python simple_inference.py --test_from models/best_model.pth
 ```
 This command will produce inference_result.txt file under the directory `./simple_inference`. It produces logit score for topic segmentation for each space between every two sentences.
