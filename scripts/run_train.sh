@@ -18,7 +18,3 @@ do
             --warmup_steps 10000 \
             --model_index A0$ws
 done
-# for index in `seq 0 2 10`
-# do
-#     echo print_$index.pt
-# done

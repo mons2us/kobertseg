@@ -17,35 +17,12 @@ from kobert.utils import download as _download
 from kobert.pytorch_kobert import get_pytorch_kobert_model
 from gluonnlp.data import SentencepieceTokenizer
 
-
 from kobert import get_tokenizer
 from kobert import get_pytorch_kobert_model
 
-
 from others.logging import logger
 from others.tokenization import BertTokenizer
-#from pytorch_transformers import XLNetTokenizer
-
 from others.utils import clean
-
-
-# def get_kobert_vocab(cachedir="./tmp/"):
-#     # Add BOS,EOS vocab
-#     vocab_info = {
-#         'url': 'https://kobert.blob.core.windows.net/models/kobert/tokenizer/kobert_news_wiki_ko_cased-ae5711deb3.spiece',
-#         'fname': 'kobert_news_wiki_ko_cased-1087f8699e.spiece',
-#         'chksum': 'ae5711deb3'
-#     }
-    
-#     vocab_file = _download(
-#         vocab_info["url"], vocab_info["chksum"], cachedir=cachedir
-#     )
-
-#     vocab_b_obj = nlp.vocab.BERTVocab.from_sentencepiece(
-#         vocab_file, padding_token="[PAD]", bos_token="[BOS]", eos_token="[EOS]"
-#     )
-
-#     return vocab_b_obj
 
 
 nyt_remove_words = ["photo", "graph", "chart", "map", "table", "drawing"]
@@ -105,6 +82,7 @@ def tokenize(args):
 
     print("Preparing to tokenize %s to %s..." % (stories_dir, tokenized_stories_dir))
     stories = os.listdir(stories_dir)
+    
     # make IO list file
     print("Making list of files to tokenize...")
     with open("mapping_for_corenlp.txt", "w") as f:
@@ -205,24 +183,11 @@ class BertData:
 #    make dataset for training
 #    BertSep model
 # --------------------------------
-class DataIterator: # generator for base dataset
-    def __init__(self, dataset):
-        self.data = dataset
-        self.size = len(dataset)
-
-    def __len__(self):
-        return self.size
-    
-    def generator(self):
-        for i, d in enumerate(self.data):
-            yield (i, d)
-
-
 def load_base_data(args):
     train_base = [d['article_original'] for d in load_jsonl(os.path.join(args.dataset_path, args.data_type, 'train.jsonl'))]
     valid_base = [d['article_original'] for d in load_jsonl(os.path.join(args.dataset_path, args.data_type, 'dev.jsonl'))]
     
-    random.seed('43')
+    random.seed(args.random_seed)
     random.shuffle(train_base)
     
     # split trainset
@@ -286,8 +251,7 @@ def _make_data(args, dataset, use_stair=True, random_point=False, corpus_type=''
 
     # create normal dataset (n)
     if use_stair and ws > 1:
-            stair_idx = 0
-            count_idx = 0
+            stair_idx, count_idx = 0, 0
             stair_lh = [(s, ws * 2 - s) for s in range(1, ws)]
             stair_rh = [(ls, rs) if ls > rs else (rs, ls) for (ls, rs) in stair_lh]
             stairs = stair_lh + stair_rh
@@ -316,7 +280,6 @@ def _make_data(args, dataset, use_stair=True, random_point=False, corpus_type=''
 
     # Preprocess using Bert preprocessor
     fin_dataset = []
-    # !!TODO!! bert.preprocess 부분 imap 추가
     for lab_idx, _set in enumerate([n_dataset, y_dataset]):
         print(f"working on label index: {lab_idx}")
         for source in tqdm(_set):
@@ -327,12 +290,12 @@ def _make_data(args, dataset, use_stair=True, random_point=False, corpus_type=''
                         'src_txt': src_txt,
                         'sep_label': lab_idx}
             fin_dataset.append(data_dict)
-
+            
     random.shuffle(fin_dataset)
 
     # save
     save_pth = os.path.join(args.dataset_path, args.data_type, f'kobertseg_dataset/kobertseg_dt_{corpus_type}_w{args.window_size}.pt')
     torch.save(fin_dataset, save_pth)
-    logger.info(f"SepBert Dataset for {corpus_type} saved at: {save_pth}")
+    logger.info(f"Kobertseg dataset for {corpus_type} saved at: {save_pth}")
 
     return

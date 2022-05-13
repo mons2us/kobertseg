@@ -48,31 +48,22 @@ if __name__ == '__main__':
     parser.add_argument("-pretrained_model", default='bert', type=str)
     parser.add_argument("-random_seed", default=227182, type=int)
 
-    # args for tokenizing
-    parser.add_argument("-save_path", default='dataset/bbc_news/tokenized_texts')
-    parser.add_argument("-raw_path", default='dataset/bbc_news/raw_stories')
-
-    parser.add_argument("-mode", default='', type=str)
-    #parser.add_argument("-select_mode", default='greedy', type=str)
-    #parser.add_argument("-map_path", default='../../data/')
+    parser.add_argument("-mode", default='generate_sepdata', type=str)
     parser.add_argument("-dataset_path", default='dataset/')
     parser.add_argument("-data_type", default='bfly', type=str)
     parser.add_argument("-train_ratio", default=0.8, type=float)
-    parser.add_argument("-test_only", action='store_true')
-    #parser.add_argument("-test_sep_num", default=-1, type=int)
+    #parser.add_argument("-test_only", action='store_true')
 
     parser.add_argument("-window_size", default=3, type=int)
-    parser.add_argument("-y_ratio", default=0.5, type=float)
+    #parser.add_argument("-y_ratio", default=0.5, type=float)
     parser.add_argument("-use_stair", action='store_true')
     parser.add_argument("-random_point", action='store_true')
 
-    parser.add_argument("-shard_size", default=2000, type=int)
+    #parser.add_argument("-shard_size", default=2000, type=int)
     parser.add_argument('-min_src_nsents', default=10, type=int)
     parser.add_argument('-max_src_nsents', default=100, type=int)
     parser.add_argument('-min_src_ntokens_per_sent', default=10, type=int)
     parser.add_argument('-max_src_ntokens_per_sent', default=200, type=int)
-    #parser.add_argument('-min_tgt_ntokens', default=5, type=int)
-    #parser.add_argument('-max_tgt_ntokens', default=500, type=int)
 
     parser.add_argument("-lower", type=str2bool, nargs='?', const=True, default=True)
     parser.add_argument("-use_bert_basic_tokenizer", type=str2bool, nargs='?',const=True,default=False)
@@ -89,4 +80,4 @@ if __name__ == '__main__':
     set_seed(args.random_seed)
 
     # !!TODO!! Edit here -> make_data
-    eval('data_builder.'+args.mode + '(args)')
+    eval('data_builder.' + args.mode + '(args)')

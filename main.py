@@ -37,15 +37,11 @@ def set_seed(random_seed=227182):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    #parser.add_argument('--task', default='ext', type=str, choices=['ext', 'abs'])
     parser.add_argument('--encoder', default='bert', type=str, choices=['bert', 'baseline'])
     parser.add_argument('--backbone_type', default='bert', type=str, choices=['bert', 'bertsum'])
     parser.add_argument('--classifier_type', default='linear', type=str, choices=['conv', 'linear'])
     parser.add_argument('--mode', default='train', type=str, choices=['train', 'test'])
     parser.add_argument('--random_seed', default=227182, type=int)
-
-    # Model builder
-    # parser.add_argument('--mode', default='train', type=str, choices=['train', 'validate', 'test'])
 
     parser.add_argument('--model_index', default='A01', type=str)
     parser.add_argument('--dataset_path', default='dataset/')
@@ -56,7 +52,6 @@ if __name__ == '__main__':
     # dataset type
     parser.add_argument('--data_type', default='bfly', type=str)
     parser.add_argument('--window_size', default=3, type=int)
-    #parser.add_argument('--y_ratio', default=0.5, type=float)
     parser.add_argument('--use_stair', action='store_true')
     parser.add_argument('--random_point', action='store_true')
 
@@ -86,7 +81,6 @@ if __name__ == '__main__':
     parser.add_argument('--enc_layers', default=6, type=int)
 
     # params for sep layers
-    # !!TODO!! change ext -> sep
     parser.add_argument('--add_transformer', type=str2bool, nargs='?', const=True, default=True)
     parser.add_argument('--ext_dropout', default=0.2, type=float)
     parser.add_argument('--ext_layers', default=2, type=int)
@@ -115,7 +109,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--save_checkpoint_steps', default=500, type=int)
     parser.add_argument('--accum_count', default=1, type=int)
-    parser.add_argument('--report_every', default=100, type=int)
+    parser.add_argument('--report_every', default=1000, type=int)
     parser.add_argument('--train_steps', default=10000, type=int)
     parser.add_argument('--recall_eval', type=str2bool, nargs='?',const=True,default=False)
     parser.add_argument('--valid_steps', default=500, type=int)
@@ -134,10 +128,6 @@ if __name__ == '__main__':
     parser.add_argument('--test_from', default='models/model_w3_fixed_step_50000.pt')
     parser.add_argument('--test_start_from', default=-1, type=int)
     parser.add_argument('--threshold', default=0.5, type=float)
-
-    parser.add_argument('--train_from', default='')
-    parser.add_argument('--report_rouge', type=str2bool, nargs='?',const=True,default=True)
-    parser.add_argument('--block_trigram', type=str2bool, nargs='?', const=True, default=True)
 
     args = parser.parse_args()
     args.gpu_ranks = [int(i) for i in args.visible_gpus.split(',')]
