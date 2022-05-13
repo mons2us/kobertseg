@@ -6,6 +6,7 @@ from glob import glob
 import json
 import numpy as np
 import torch
+import torch.nn.functional as F
 from time import time
 
 from utils.data_loader import TextLoader
@@ -85,8 +86,8 @@ class SepInference:
             (src, segs, clss, mask_src, mask_cls), _ = batch
 
             assert clss.shape[-1] == ws*2
-            logit = self.model(src, segs, clss, mask_src, mask_cls).detach().to('cpu').item()
-            logits.append(logit)
+            logit = self.model(src, segs, clss, mask_src, mask_cls).detach().to('cpu')#.item()
+            logits.append(torch.sigmoid(logit).item())
             
         print(f"Elapsed Time: {time() - start}")
 
