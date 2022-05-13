@@ -52,25 +52,19 @@ if __name__ == '__main__':
     parser.add_argument("-dataset_path", default='dataset/')
     parser.add_argument("-data_type", default='bfly', type=str)
     parser.add_argument("-train_ratio", default=0.8, type=float)
-    #parser.add_argument("-test_only", action='store_true')
 
     parser.add_argument("-window_size", default=3, type=int)
-    #parser.add_argument("-y_ratio", default=0.5, type=float)
     parser.add_argument("-use_stair", action='store_true')
     parser.add_argument("-random_point", action='store_true')
 
-    #parser.add_argument("-shard_size", default=2000, type=int)
     parser.add_argument('-min_src_nsents', default=10, type=int)
     parser.add_argument('-max_src_nsents', default=100, type=int)
     parser.add_argument('-min_src_ntokens_per_sent', default=10, type=int)
     parser.add_argument('-max_src_ntokens_per_sent', default=200, type=int)
 
-    parser.add_argument("-lower", type=str2bool, nargs='?', const=True, default=True)
-    parser.add_argument("-use_bert_basic_tokenizer", type=str2bool, nargs='?',const=True,default=False)
-
     parser.add_argument('-log_dir', default='logs/')
-    parser.add_argument('-dataset', default='')
-    parser.add_argument('-n_cpus', default=8, type=int)
+    #parser.add_argument('-dataset', default='')
+    #parser.add_argument('-n_cpus', default=8, type=int)
 
     args = parser.parse_args()
     log_file = os.path.join(args.log_dir, f'{args.data_type}.log')
