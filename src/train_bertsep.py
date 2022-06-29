@@ -46,7 +46,7 @@ def train_multi_sep(args):
         error_handler.add_child(procs[i].pid)
     for p in procs:
         p.join()
-
+        
 
 def run(args, device_id, error_queue):
     """ run process """
@@ -104,15 +104,10 @@ class ErrorHandler(object):
 # ------------------------
 #      Build Trainer
 # ------------------------
-# def train_ext(args, device_id):
-#     if (args.world_size > 1):
-#         train_multi_ext(args)
-#     else:
-#         train_single_ext(args, device_id)
-
 # add multi if use multi-gpu
 def train_sep(args, device_id):
-    train_single_sep(args, device_id)
+    train_multi_sep(args)
+    #train_single_sep(args, device_id)
 
 def train_single_sep(args, device_id):
     os.makedirs(f'models/index_{args.model_index}', exist_ok=True)

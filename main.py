@@ -109,12 +109,13 @@ if __name__ == '__main__':
 
     parser.add_argument('--save_checkpoint_steps', default=500, type=int)
     parser.add_argument('--accum_count', default=1, type=int)
-    parser.add_argument('--report_every', default=1000, type=int)
+    parser.add_argument('--report_every', default=100, type=int)
     parser.add_argument('--train_steps', default=10000, type=int)
     parser.add_argument('--recall_eval', type=str2bool, nargs='?',const=True,default=False)
     parser.add_argument('--valid_steps', default=500, type=int)
 
     parser.add_argument('--visible_gpus', default='1', type=str)
+    parser.add_argument('--train_from', default='', type=str)
     parser.add_argument('--gpu_ranks', default='0', type=str)
     parser.add_argument('--log_dir', default='logs/traineval')
 
@@ -133,6 +134,11 @@ if __name__ == '__main__':
     args.gpu_ranks = [int(i) for i in args.visible_gpus.split(',')]
     args.gpu_ranks = [0] if len(args.gpu_ranks) == 1 else args.gpu_ranks
     args.world_size = len(args.gpu_ranks)
+    
+    # accum_count = n_gpus
+    args.accum_count = args.world_size 
+    
+    print(args.gpu_ranks, args.world_size)
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.visible_gpus
 

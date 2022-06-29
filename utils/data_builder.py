@@ -197,12 +197,14 @@ def load_base_data(args):
     validset_y, validset_n = valid_base[:val_y_len], valid_base[val_y_len:]
     
     trainset_y, trainset_n = (
-        [[trainset_y[i], trainset_y[i+1]] for i in range(len(trainset_y) - 1)[::2]],
+        #[[trainset_y[i], trainset_y[i+1]] for i in range(len(trainset_y) - 1)[::2]],
+        [[trainset_y[i], trainset_y[i+1]] for i in range(len(trainset_y) - 1)],
         trainset_n
     )
     
     validset_y, validset_n = (
-        [[validset_y[i], validset_y[i+1]] for i in range(len(validset_y) - 1)[::2]],
+        #[[validset_y[i], validset_y[i+1]] for i in range(len(validset_y) - 1)[::2]],
+        [[validset_y[i], validset_y[i+1]] for i in range(len(validset_y) - 1)],
         validset_n
     )
     

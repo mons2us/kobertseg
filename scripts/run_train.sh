@@ -3,13 +3,13 @@ do
     echo window size: $ws
     python main.py \
             --mode train \
-            --random_seed 227182 \
+            --random_seed 43 \
             --window_size $ws \
             --batch_size 3000 \
             --save_checkpoint_steps 10000 \
-            --train_steps 50000 \
+            --train_steps 100000 \
             --valid_steps 10000 \
-            --visible_gpus 0 \
+            --visible_gpus 0,1 \
             --backbone_type bert \
             --add_transformer False \
             --finetune_bert True \

@@ -86,8 +86,9 @@ class SepInference:
             (src, segs, clss, mask_src, mask_cls), _ = batch
 
             assert clss.shape[-1] == ws*2
-            logit = self.model(src, segs, clss, mask_src, mask_cls).detach().to('cpu')#.item()
-            logits.append(torch.sigmoid(logit).item())
+            logit = self.model(src, segs, clss, mask_src, mask_cls).detach().to('cpu').item()
+            logits.append(logit)
+            #logits.append(torch.sigmoid(logit).item())
             
         print(f"Elapsed Time: {time() - start}")
 

@@ -117,7 +117,6 @@ class Trainer(object):
         save_dir = os.path.join(self.args.model_path, f'index_{self.args.model_index}')
         setattr(self, 'save_dir', save_dir)
 
-        # step =  self.optim._step + 1
         step = self.optim._step + 1
         true_batchs = []
         accum = 0
@@ -144,6 +143,7 @@ class Trainer(object):
                 일반적으로는 [5, 512(max_pos)]의 형태를 따르나 길이에 따라 [10, 239] 등의 형태도 존재
                 '''
                 if self.n_gpu == 0 or (i % self.n_gpu == self.gpu_rank):
+                    print('i:', i, ' n_gpu', self.n_gpu, self.gpu_rank, 'step: ', step)
                     true_batchs.append(batch)
                     normalization += batch.batch_size
                     accum += 1
@@ -259,7 +259,6 @@ class Trainer(object):
         model_state_dict = real_model.state_dict()
         checkpoint = {
             'model': model_state_dict,
-            # 'generator': generator_state_dict,
             'opt': self.args,
             'optim': self.optim,
         }
